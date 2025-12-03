@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f1f1f1;
+        }
+
+        .calculator {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            width: 260px;
+        }
+
+        .display {
+            background: #000;
+            color: #0f0;
+            height: 60px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            overflow: hidden;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            height: 50px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #444;
+            color: #fff;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        .btn-operator {
+            background: #ff9500;
+        }
+
+        .btn-operator:hover {
+            background: #e08900;
+        }
+
+        .btn-equal {
+            background: #28a745;
+            grid-column: span 2;
+        }
+
+        .btn-equal:hover {
+            background: #218838;
+        }
+
+        .btn-clear {
+            background: #dc3545;
+        }
+
+        .btn-clear:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <div id="display" class="display">0</div>
+    <div class="buttons">
+        <button class="btn-clear" onclick="clearDisplay()">C</button>
+        <button onclick="backspace()">&larr;</button>
+        <button onclick="appendToDisplay('%')" class="btn-operator">%</button>
+        <button onclick="appendToDisplay('/')" class="btn-operator">/</button>
+
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('*')" class="btn-operator">*</button>
+
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('-')" class="btn-operator">-</button>
+
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('+')" class="btn-operator">+</button>
+
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+        <button class="btn-equal" onclick="calculateResult()">=</button>
+    </div>
+</div>
+
+<script>
+    const display = document.getElementById('display');
+
+    function appendToDisplay(value) {
+        if (display.textContent === '0' || display.textContent === 'Error') {
+            display.textContent = value;
+        } else {
+            display.textContent += value;
+        }
+    }
+
+    function clearDisplay() {
+        display.textContent = '0';
+    }
+
+    function backspace() {
+        if (display.textContent.length > 1) {
+            display.textContent = display.textContent.slice(0, -1);
+        } else {
+            display.textContent = '0';
+        }
+    }
+
+    function calculateResult() {
+        try {
+            // eval is fine for this simple project; avoid it in real apps with user input
+            const result = eval(display.textContent);
+            display.textContent = result;
+        } catch (e) {
+            display.textContent = 'Error';
+        }
+    }
+</script>
+
+</body>
+</html>
